@@ -54,6 +54,34 @@
 		left: 8px;
 	}
 
+	#orient  {
+		position: absolute;
+		z-index: 9;
+		top: 66%;
+		bottom: 0%;
+		padding: 20px;
+		opacity: 0.5;
+		background-color: white;
+		width: 100%;
+	}
+
+	#orient svg {
+		width: 150px;
+		opacity: 1.0;
+	}
+
+	#orient1  {
+		float: left;
+		width: 400px;
+		height: 150px;
+	}
+
+	#orient2  {
+		float: left;
+		width: 400px;
+		height: 150px;
+	}
+
    </style>
 </head>
 
@@ -61,6 +89,64 @@
    <div id="map" style=""></div>
    <div id="location"></div>
    <div id="logo"><img src="opensolarmap.png" width=25%></div>
+   <div id="orient">
+     <div id="orient1"><svg style="float: left; display: inline-block">
+  <rect
+     style="fill:#ffffff;fill-opacity:1;stroke-width:3px;stroke:#000000;stroke-opacity:1"
+     id="rect2985"
+     width="100"
+     height="100"
+     x="0"
+     y="0" />
+  <path
+     style="fill:none;stroke:#000000;stroke-width:3px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     d="m 50,0 0,100"
+     id="path3757" />
+</svg>
+<svg style="float: left; display: inline-block">
+  <rect
+     style="fill:#ffffff;fill-opacity:1;stroke-width:3px;stroke:#000000;stroke-opacity:1"
+     id="rect2985"
+     width="100"
+     height="100"
+     x="0"
+     y="0" />
+  <path
+     style="fill:none;stroke:#000000;stroke-width:3px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     d="m 0,50 100,0"
+     id="path3757" />
+</svg></div>
+
+     <div id="orient2"><svg  style="float: left; display: inline-block">
+  <rect
+     style="fill:#ffffff;fill-opacity:1;stroke-width:3px;stroke:#000000;stroke-opacity:1"
+     id="rect2985"
+     width="100"
+     height="100"
+     x="0"
+     y="0" />
+</svg>
+<svg  style="float: left; display: inline-block">
+  <rect
+     style="fill:#ffffff;fill-opacity:1;stroke-width:3px;stroke:#000000;stroke-opacity:1"
+     id="rect2985"
+     width="100"
+     height="100"
+     x="0"
+     y="0" />
+  <text
+     xml:space="preserve"
+     style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
+     x="50"
+     y="70"
+     id="text3816"><tspan
+       id="tspan3818"
+       x="50"
+       y="60"
+       style="font-size:56px;text-align:center;text-anchor:middle">?</tspan></text>
+</svg>
+</div>
+   </div>
 
    <script>
       var building;
