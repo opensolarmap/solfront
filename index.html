@@ -102,6 +102,12 @@ color: white;
    <div id="location"></div>
    <div id="logo"><a href="https://cquest.hackpad.com/OpenSolarMap-9oMiYswLksF"><img src="opensolarmap.png" width=25%></a></div>
    <div id="plusone">+1 !</div>
+   <div id="stats">
+     <div id="count_total"></div>
+     <div id="count_ip"></div>
+     <div id="count_ips"></div>
+     <div id="count_buildings"></div>
+   </div>
 
    <div id="orient">
      <div id="orient1">
@@ -178,6 +184,16 @@ color: white;
 			.await(makeMap);
       }
 
+      queue()
+          .defer(d3.json, 'http://stmaur.cquest.org:12345/stats')
+          .await(gotStats);
+
+      function gotStats(error, stats) {
+	d3.select("#count_total").text(stats.count_total);
+	d3.select("#count_ip").text(stats.count_ip);
+	d3.select("#count_ips").text(stats.count_ips);
+	d3.select("#count_buildings").text(stats.count_buildings);
+      }
 
       function onEachFeature(feature, layer) {
           // does this feature have a property named popupContent?
