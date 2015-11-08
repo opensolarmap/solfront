@@ -3,6 +3,7 @@
 <head>
    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
+
    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js" charset="utf-8"></script>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/queue-async/1.0.7/queue.min.js"></script>
@@ -117,6 +118,10 @@ color: white;
      <img src="https://cdn0.iconfinder.com/data/icons/duesseldorf/32/customers.png"><div id="count_total">&nbsp;</div>
    </div>
 
+   <div id="social">
+     <a href="http://twitter.com/opensolarmap"><img src="https://cdn0.iconfinder.com/data/icons/duesseldorf/32/twitter.png"></a>
+   </div>
+
    <div id="orient">
      <div id="orient1">
      <svg style="float: left; display: inline-block" id="rooftype1">
@@ -222,11 +227,14 @@ color: white;
 
           var map = L.map('map',{ zoomControl:false }).setView([building.properties.lat, building.properties.lon], 19);
  
+	map.locate({setView: false, maxZoom: 16});
+
           L.tileLayer('http://{s}.tiles.mapbox.com/v4/openstreetmap.map-inh7ifmo/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoib3BlbnN0cmVldG1hcCIsImEiOiJncjlmd0t3In0.DmZsIeOW-3x-C5eX-wAqTw', {
               maxZoom: 19,
               minZoom: 16,
               attribution: 'Imagery &copy; <a href="https://www.mapbox.com/satellite/">Mapbox/DigitalGlobe</a> - Map data &copy; <a href="http://osm.org/copyright">OpenStreetMap contributors</a>'
           }).addTo(map);
+
 
      	var mark = L.circle([building.properties.lat, building.properties.lon], building.properties.radius*1.2, {color: 'yellow', fillColor: 'yellow', fillOpacity: 0.15}).addTo(map);
 
@@ -234,6 +242,7 @@ color: white;
 
 d3.selectAll('#orient svg')
 .on('click', function(){pushbutton(this,'clickevt');console.log('clicked');});
+
 
 	function pushbutton(that, evt) {
 		var roof_id = building.properties.id;
