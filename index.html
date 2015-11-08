@@ -138,41 +138,49 @@ color: white;
    <div id="orient">
      <div id="orient1">
      <svg style="float: left; display: inline-block" id="rooftype1" alt="Type de toiture" title="Type de toiture">
-  <rect
-     style="fill:#ffffff;fill-opacity:1;stroke-width:3px;stroke:#000000;stroke-opacity:1"
-     id="rect2985"
-     width="100"
-     height="100"
-     x="0"
-     y="0" />
-  <path
-     style="fill:none;stroke:#000000;stroke-width:3px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-     d="m 50,0 0,100"
-     id="path3757" />
-</svg>
-<svg style="float: left; display: inline-block" id="rooftype2">
-  <rect
-     style="fill:#ffffff;fill-opacity:1;stroke-width:3px;stroke:#000000;stroke-opacity:1"
-     id="rect2985"
-     width="100"
-     height="100"
-     x="0"
-     y="0" />
-  <path
-     style="fill:none;stroke:#000000;stroke-width:3px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-     d="m 0,50 100,0"
-     id="path3757" />
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:4;stroke-linecap:round;stroke-opacity:1;stroke-dasharray:none"
+       width="90"
+       height="21"
+       x="5"
+       y="-23.5"
+       transform="matrix(0,1,-1,0,0,0)" />
+    <path
+       style="fill:#ffffff;stroke:#000000;stroke-width:4px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+       d="m 100,0 10,50 -10,50 -90,0 L 20,50 10,0 z" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:3px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 20,50 90,0"/>
+</svg><svg style="float: left; display: inline-block" id="rooftype2">
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:4;stroke-linecap:round;stroke-opacity:1;stroke-dasharray:none"
+       id="rect2993"
+       width="90"
+       height="21"
+       x="5"
+       y="85" />
+    <path
+       style="fill:#ffffff;stroke:#000000;stroke-width:4px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+       d="M 0,10 50,0 100,10 100,100 50,90 0,100 z" />
+    <path
+       style="fill:none;stroke:#000000;stroke-width:3px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 50,90 50,0" />
 </svg></div>
 
      <div id="orient2">
      <svg  style="float: left; display: inline-block" id="rooftype3">
-  <rect
-     style="fill:#ffffff;fill-opacity:1;stroke-width:3px;stroke:#000000;stroke-opacity:1"
-     id="rect2985"
-     width="100"
-     height="100"
-     x="0"
-     y="0" />
+    <rect
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:4;stroke-linecap:round;stroke-opacity:1;stroke-dasharray:none"
+       id="rect2993"
+       width="90"
+       height="21"
+       x="5"
+       y="-23.5"
+       transform="matrix(0,1,-1,0,0,0)" />
+    <path
+       style="fill:#ffffff;stroke:#000000;stroke-width:4px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+       d="m 100,0 0,100 -90,0 0,-100 z"
+       />
 </svg>
 <svg  style="float: left; display: inline-block"  id="rooftype4">
   <rect
@@ -246,8 +254,9 @@ color: white;
               attribution: 'Imagery &copy; <a href="https://www.mapbox.com/satellite/">Mapbox/DigitalGlobe</a> - Map data &copy; <a href="http://osm.org/copyright">OpenStreetMap contributors</a>'
           }).addTo(map);
 
+//	var gJson = L.geoJson(building, {style: function (feature) { return {color: 'white'};},}).addTo(map);
 
-     	var mark = L.circle([building.properties.lat, building.properties.lon], building.properties.radius*1.2, {color: 'yellow', fillColor: 'yellow', fillOpacity: 0.15}).addTo(map);
+     	var mark = L.circle([building.properties.lat, building.properties.lon], building.properties.radius*1.2, {color: 'yellow', fillColor: 'yellow', fillOpacity: 0}).addTo(map);
 
 		d3.select("#location").text(geocode.features[0].properties.label);
 
