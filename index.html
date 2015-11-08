@@ -248,12 +248,11 @@ var rooftype_number = that;
 }
 d3.select('svg#rooftype' + rooftype_number)
 .append('circle')
-.attr('r',50)
+.attr('r',30)
 .attr('cx', 50)
 .attr('cy', 50)
-.attr('stroke', 'orange')
-.attr('fill-opacity', 0)
-.attr('stroke-width',3);
+.attr('fill', 'yellow')
+.attr('opacity', 0.8);
 
 		var xhr = new XMLHttpRequest();
 		xhr.open('POST', 'http://stmaur.cquest.org:12345/building');
