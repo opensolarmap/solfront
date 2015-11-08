@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<html>
 <head>
    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
@@ -63,25 +64,36 @@
 		opacity: 0.5;
 		background-color: white;
 		width: 100%;
+    padding-left: 35%;
 	}
 
 	#orient svg {
 		width: 150px;
 		opacity: 1.0;
+
 	}
 
 	#orient1  {
 		float: left;
-		width: 400px;
+		width: 308px;
 		height: 150px;
 	}
 
 	#orient2  {
 		float: left;
-		width: 400px;
+		width: 308px;
 		height: 150px;
 	}
 
+#plusone{
+position: absolute;
+left: 50%;
+top: 50%;
+z-index: 100;
+font-size: 100px;
+display: none;
+color: orange;
+}
    </style>
 </head>
 
@@ -89,8 +101,11 @@
    <div id="map" style=""></div>
    <div id="location"></div>
    <div id="logo"><img src="opensolarmap.png" width=25%></div>
+   <div id="plusone">+1</div>
+
    <div id="orient">
-     <div id="orient1"><svg style="float: left; display: inline-block">
+     <div id="orient1">
+     <svg style="float: left; display: inline-block" id="rooftype1">
   <rect
      style="fill:#ffffff;fill-opacity:1;stroke-width:3px;stroke:#000000;stroke-opacity:1"
      id="rect2985"
@@ -103,7 +118,7 @@
      d="m 50,0 0,100"
      id="path3757" />
 </svg>
-<svg style="float: left; display: inline-block">
+<svg style="float: left; display: inline-block" id="rooftype2">
   <rect
      style="fill:#ffffff;fill-opacity:1;stroke-width:3px;stroke:#000000;stroke-opacity:1"
      id="rect2985"
@@ -117,7 +132,8 @@
      id="path3757" />
 </svg></div>
 
-     <div id="orient2"><svg  style="float: left; display: inline-block">
+     <div id="orient2">
+     <svg  style="float: left; display: inline-block" id="rooftype3">
   <rect
      style="fill:#ffffff;fill-opacity:1;stroke-width:3px;stroke:#000000;stroke-opacity:1"
      id="rect2985"
@@ -126,7 +142,7 @@
      x="0"
      y="0" />
 </svg>
-<svg  style="float: left; display: inline-block">
+<svg  style="float: left; display: inline-block"  id="rooftype4">
   <rect
      style="fill:#ffffff;fill-opacity:1;stroke-width:3px;stroke:#000000;stroke-opacity:1"
      id="rect2985"
@@ -193,6 +209,36 @@
 
 		d3.select("#location").text(geocode.features[0].properties.label);
 
+d3.selectAll('#orient svg')
+.on('click', function(){pushbutton(this);console.log('clicked');});
+
+console.log(geocode);
+console.log(building.properties.id);
+function pushbutton(that) {
+console.log(that.id);
+console.log(that.id.replace('rooftype', ''));
+//geocode.features[0].properties.id;
+var roof_id = building.properties.id;
+var rooftype_number = that.id.replace('rooftype', '');
+var xhr = new XMLHttpRequest();
+xhr.open('POST', 'http://stmaur.cquest.org:12345/building');
+xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+xhr.send('type=' + rooftype_number + '&id=' + roof_id);
+
+
+d3.select('div#plusone')
+    .style('display', 'block')
+    .style('font-size', '12px')
+    .transition()
+    .duration(1500)
+    .style('font-size', '200px')
+    .transition()
+    .delay(1500)
+    .style('display', 'none');
+
+location.reload();
+
+};
 }
 </script>
 </body>
