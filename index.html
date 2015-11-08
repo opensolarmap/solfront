@@ -50,7 +50,7 @@
 
 	#logo  {
 		position: absolute;
-		z-index: 7;
+		z-index: 10;
 		bottom: 8px;
 		left: 8px;
 	}
@@ -92,7 +92,7 @@ top: 50%;
 z-index: 100;
 font-size: 100px;
 display: none;
-color: orange;
+color: white;
 }
    </style>
 </head>
@@ -101,7 +101,7 @@ color: orange;
    <div id="map" style=""></div>
    <div id="location"></div>
    <div id="logo"><img src="opensolarmap.png" width=25%></div>
-   <div id="plusone">+1</div>
+   <div id="plusone">+1 !</div>
 
    <div id="orient">
      <div id="orient1">
@@ -212,33 +212,29 @@ color: orange;
 d3.selectAll('#orient svg')
 .on('click', function(){pushbutton(this);console.log('clicked');});
 
-console.log(geocode);
-console.log(building.properties.id);
-function pushbutton(that) {
-console.log(that.id);
-console.log(that.id.replace('rooftype', ''));
-//geocode.features[0].properties.id;
-var roof_id = building.properties.id;
-var rooftype_number = that.id.replace('rooftype', '');
-var xhr = new XMLHttpRequest();
-xhr.open('POST', 'http://stmaur.cquest.org:12345/building');
-xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-xhr.send('type=' + rooftype_number + '&id=' + roof_id);
-
-
-d3.select('div#plusone')
-    .style('display', 'block')
-    .style('font-size', '12px')
-    .transition()
-    .duration(1500)
-    .style('font-size', '200px')
-    .transition()
-    .delay(1500)
-    .style('display', 'none');
-
-location.reload();
-
-};
+	function pushbutton(that) {
+		var roof_id = building.properties.id;
+		var rooftype_number = that.id.replace('rooftype', '');
+		var xhr = new XMLHttpRequest();
+		xhr.open('POST', 'http://stmaur.cquest.org:12345/building');
+		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		xhr.onreadystatechange = function() {
+		if(xhr.status == 200) {
+			d3.select('div#plusone')
+			    .style('display', 'block')
+			    .style('font-size', '40px')
+			    .transition()
+			    .duration(1000)
+			    .style('font-size', '100px')
+			    .style('opacity', '0')
+			    .transition()
+			    .delay(1500)
+			    .style('display', 'none');
+			location.reload();
+			}
+		};
+		xhr.send('type=' + rooftype_number + '&id=' + roof_id);
+	};
 }
 </script>
 </body>
