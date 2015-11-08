@@ -94,6 +94,15 @@ font-size: 100px;
 display: none;
 color: white;
 }
+
+	#stats {
+		position: absolute;
+		left: 8px;
+		top: 116px;
+		background-color: white;
+		opacity: 0.8;
+		padding: 10px 10px;
+	}
    </style>
 </head>
 
@@ -103,10 +112,9 @@ color: white;
    <div id="logo"><a href="https://cquest.hackpad.com/OpenSolarMap-9oMiYswLksF"><img src="opensolarmap.png" width=25%></a></div>
    <div id="plusone">+1 !</div>
    <div id="stats">
-     <div id="count_total"></div>
-     <div id="count_ip"></div>
-     <div id="count_ips"></div>
-     <div id="count_buildings"></div>
+     <img src="https://cdn0.iconfinder.com/data/icons/duesseldorf/32/user.png"><div id="count_ip">&nbsp;</div>
+     <img src="https://cdn0.iconfinder.com/data/icons/duesseldorf/32/home.png"><div id="count_buildings">&nbsp;</div>
+     <img src="https://cdn0.iconfinder.com/data/icons/duesseldorf/32/customers.png"><div id="count_total">&nbsp;</div>
    </div>
 
    <div id="orient">
@@ -191,7 +199,6 @@ color: white;
       function gotStats(error, stats) {
 	d3.select("#count_total").text(stats.count_total);
 	d3.select("#count_ip").text(stats.count_ip);
-	d3.select("#count_ips").text(stats.count_ips);
 	d3.select("#count_buildings").text(stats.count_buildings);
       }
 
