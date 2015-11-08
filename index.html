@@ -7,7 +7,7 @@
    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js" charset="utf-8"></script>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/queue-async/1.0.7/queue.min.js"></script>
-   <script src="https://raw.githubusercontent.com/mlevans/leaflet-hash/master/leaflet-hash.js"></script>
+
 
    <style>
 
@@ -62,7 +62,7 @@
 		top: 75%;
 		bottom: 0%;
 		padding: 20px;
-		opacity: 0.5;
+		opacity: 0.8;
 		background-color: white;
 		width: 100%;
     padding-left: 25%;
@@ -105,6 +105,18 @@ color: white;
 		background-color: white;
 		opacity: 0.8;
 		padding: 10px 10px;
+		transition: width 1s;
+		-webkit-transition: width 2s;
+	}
+	#stats:hover {
+		width: 200px;
+	}
+
+	#social {
+		position: absolute;
+		bottom: 8px;
+		left: 8px;
+		z-index: 10;
 	}
    </style>
 </head>
@@ -115,9 +127,9 @@ color: white;
    <div id="logo"><a href="https://cquest.hackpad.com/OpenSolarMap-9oMiYswLksF"><img src="img/opensolarmap.png" width=25%></a></div>
    <div id="plusone">+1 !</div>
    <div id="stats">
-     <img src="img//user.png"><div id="count_ip">&nbsp;</div>
-     <img src="img/building.png"><div id="count_buildings">&nbsp;</div>
-     <img src="img/users.png"><div id="count_total">&nbsp;</div>
+     <img src="img//user.png"><div id="count_ip">----</div>
+     <img src="img/building.png"><div id="count_buildings">----</div>
+     <img src="img/users.png"><div id="count_total">----</div>
    </div>
 
    <div id="social">
