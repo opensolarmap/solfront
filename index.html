@@ -210,11 +210,28 @@ color: white;
 		d3.select("#location").text(geocode.features[0].properties.label);
 
 d3.selectAll('#orient svg')
-.on('click', function(){pushbutton(this);console.log('clicked');});
+.on('click', function(){pushbutton(this,'clickevt');console.log('clicked');});
 
-	function pushbutton(that) {
+	function pushbutton(that, evt) {
 		var roof_id = building.properties.id;
-		var rooftype_number = that.id.replace('rooftype', '');
+		if (evt == 'clickevt'){
+var rooftype_number = that.id.replace('rooftype', '');
+
+}
+else
+{
+var rooftype_number = that;
+
+}
+d3.select('svg#rooftype' + rooftype_number)
+.append('circle')
+.attr('r',50)
+.attr('cx', 50)
+.attr('cy', 50)
+.attr('stroke', 'orange')
+.attr('fill-opacity', 0)
+.attr('stroke-width',3);
+
 		var xhr = new XMLHttpRequest();
 		xhr.open('POST', 'http://stmaur.cquest.org:12345/building');
 		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -235,6 +252,27 @@ d3.selectAll('#orient svg')
 		};
 		xhr.send('type=' + rooftype_number + '&id=' + roof_id);
 	};
+
+d3.select("body")
+    .on("keydown", function() {
+console.log(d3.event.keyCode);
+if (d3.event.keyCode == 49 || d3.event.keyCode == 97){
+pushbutton(1,'keyevt');
+}
+else if (d3.event.keyCode == 50 || d3.event.keyCode == 98){
+pushbutton(2,'keyevt');
+}
+else if (d3.event.keyCode == 51 || d3.event.keyCode == 99){
+pushbutton(3,'keyevt');
+}
+else if (d3.event.keyCode == 52 || d3.event.keyCode == 100){
+pushbutton(4,'keyevt');
+}
+
+;
+
+});
+
 }
 </script>
 </body>
