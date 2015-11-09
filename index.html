@@ -121,55 +121,57 @@ color: white;
 <body>
    <div id="map" style=""></div>
    <div id="location"></div>
-   <div id="logo"><a href="https://cquest.hackpad.com/OpenSolarMap-9oMiYswLksF" target="_blank"><img src="img/opensolarmap.png" width=25%></a></div>
+   <div id="logo"><a href="https://cquest.hackpad.com/OpenSolarMap-9oMiYswLksF" target="_blank" title="OpenSolarMap : le projet"><img src="img/opensolarmap.png" width=25%></a></div>
    <div id="plusone">+1 !</div>
    <div id="stats">
-     <img src="img//user.png"><div id="count_ip">----</div>
-     <img src="img/building.png"><div id="count_buildings">----</div>
-     <img src="img/users.png"><div id="count_total">----</div>
+     <img src="img//user.png" alt="Vos informations collectées" title="Vos informations collectées"><div id="count_ip">----</div>
+     <img src="img/building.png" alt="Bâtiments identifiés" title="Bâtiments identifiés"><div id="count_buildings">----</div>
+     <img src="img/users.png"  alt="Total des informations collectées" title="Total des informations collectées"><div id="count_total">----</div>
    </div>
 
    <div id="social">
-     <a href="https://www.facebook.com/opensolarmap"><img src="img/facebook.png"></a>&nbsp;
-     <a href="http://twitter.com/opensolarmap"><img src="img/twitter.png"></a>&nbsp;
-     <a href="mailto:contact@opensolarmap.org"><img src="img/email.png"></a>
+     <a href="https://www.facebook.com/opensolarmap" title="Page Facebook d'OpenSolarMap"><img src="img/facebook.png"></a>&nbsp;
+     <a href="http://twitter.com/opensolarmap" title="Compte Twitter d'OpenSolarMap"><img src="img/twitter.png"></a>&nbsp;
+     <a href="mailto:contact@opensolarmap.org" title="Nous envoyer un email"><img src="img/email.png"></a>
    </div>
 
    <div id="orient">
      <div id="orient1">
-     <svg style="float: left; display: inline-block" id="rooftype1" alt="Type de toiture" title="Type de toiture">
-    <rect
+     <svg style="float: left; display: inline-block" id="rooftype1" alt="Ligne de faîte orientée est-ouest" title="Ligne de faîte orientée est-ouest">
+     <rect
        style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:4;stroke-linecap:round;stroke-opacity:1;stroke-dasharray:none"
        width="90"
        height="21"
        x="5"
        y="-23.5"
        transform="matrix(0,1,-1,0,0,0)" />
-    <path
+     <path
        style="fill:#ffffff;stroke:#000000;stroke-width:4px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
        d="m 100,0 10,50 -10,50 -90,0 L 20,50 10,0 z" />
-    <path
+     <path
        style="fill:none;stroke:#000000;stroke-width:3px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="m 20,50 90,0"/>
-</svg><svg style="float: left; display: inline-block" id="rooftype2">
-    <rect
+     </svg>
+     <svg style="float: left; display: inline-block" id="rooftype2" alt="Ligne de faîte orientée nord-sud" title="Ligne de faîte orientée nord-sud">
+     <rect
        style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:4;stroke-linecap:round;stroke-opacity:1;stroke-dasharray:none"
        id="rect2993"
        width="90"
        height="21"
        x="5"
        y="85" />
-    <path
+     <path
        style="fill:#ffffff;stroke:#000000;stroke-width:4px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
        d="M 0,10 50,0 100,10 100,100 50,90 0,100 z" />
-    <path
+     <path
        style="fill:none;stroke:#000000;stroke-width:3px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="M 50,90 50,0" />
-</svg></div>
+     </svg>
+     </div>
 
      <div id="orient2">
-     <svg  style="float: left; display: inline-block" id="rooftype3">
-    <rect
+     <svg  style="float: left; display: inline-block" id="rooftype3" alt="Toit plat" title="Toit plat">
+     <rect
        style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:4;stroke-linecap:round;stroke-opacity:1;stroke-dasharray:none"
        id="rect2993"
        width="90"
@@ -177,31 +179,27 @@ color: white;
        x="5"
        y="-23.5"
        transform="matrix(0,1,-1,0,0,0)" />
-    <path
+     <path
        style="fill:#ffffff;stroke:#000000;stroke-width:4px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
        d="m 100,0 0,100 -90,0 0,-100 z"
        />
-</svg>
-<svg  style="float: left; display: inline-block"  id="rooftype4">
-  <rect
-     style="fill:#ffffff;fill-opacity:1;stroke-width:3px;stroke:#000000;stroke-opacity:1"
-     id="rect2985"
-     width="100"
-     height="100"
-     x="0"
-     y="0" />
-  <text
-     xml:space="preserve"
-     style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
-     x="50"
-     y="70"
-     id="text3816"><tspan
-       id="tspan3818"
+     </svg>
+     <svg  style="float: left; display: inline-block"  id="rooftype4" alt="Forme de toit inconnue ou complexe" title="Forme de toit inconnue ou complexe">
+     <rect
+       style="fill:#ffffff;fill-opacity:1;stroke-width:3px;stroke:#000000;stroke-opacity:1"
+       id="rect2985"
+       width="100"
+       height="100"
+       x="0"
+       y="0" />
+     <text
+       xml:space="preserve"
+       style="font-size:40px;font-style:normal;font-weight:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Sans"
        x="50"
-       y="60"
-       style="font-size:56px;text-align:center;text-anchor:middle">?</tspan></text>
-</svg>
-</div>
+       y="70"
+       id="text3816"><tspan id="tspan3818" x="50" y="60" style="font-size:56px;text-align:center;text-anchor:middle">?</tspan></text>
+     </svg>
+     </div>
    </div>
 
    <script>
