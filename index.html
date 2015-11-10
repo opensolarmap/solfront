@@ -215,10 +215,13 @@ color: #0f0
 		attribution: 'Imagery &copy; <a href="https://www.mapbox.com/satellite/">Mapbox/DigitalGlobe</a> - Map data &copy; <a href="http://osm.org/copyright">OpenStreetMap contributors</a>'
 	}).addTo(map);
 
-	function getNext() {
+	function getNext(lat, lon) {
 		// get one building to classify...
+		api_get_building = 'http://stmaur.cquest.org:12345/building';
+		if (lat != undefined && lon != undefined)
+			api_get_building = api_get_building + '?lat='+lat+'&lon='+lon
 		queue()
-			.defer(d3.json, 'http://stmaur.cquest.org:12345/building')
+			.defer(d3.json, api_get_building)
 			.await(gotBuilding);
 
 		// get statistics
@@ -303,7 +306,7 @@ color: #0f0
 				    .style('display', 'none');
 
 				// get next building to classify and update statistics...
-				getNext();
+				getNext(building.properties.lat, building.properties.lon);
 			};
 		};
 		xhr.send('type=' + rooftype_number + '&id=' + roof_id);
