@@ -65,15 +65,14 @@
 		opacity: 0.8;
 		background-color: white;
 		width: 100%;
-    padding-left: 25%;
+		padding-left: 15%;
 	}
 
 	#orient svg {
 		width: 150px;
 		opacity: 1.0;
-    cursor:pointer;
-    cursor:hand;
-
+		cursor:pointer;
+		cursor:hand;
 	}
 
 	#orient1  {
@@ -88,15 +87,23 @@
 		height: 150px;
 	}
 
-#plusone{
-position: absolute;
-left: 50%;
-top: 50%;
-z-index: 100;
-font-size: 100px;
-display: none;
-color: white;
-}
+	#description {
+		float: left;
+		padding: 20px 35px 0 0;
+		width: 220px;
+		z-index: 100;
+		font-size: 13px;
+	}
+
+	#plusone {
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		z-index: 100;
+		font-size: 100px;
+		display: none;
+		color: white;
+	}
 
 	#stats {
 		position: absolute;
@@ -104,10 +111,19 @@ color: white;
 		top: 116px;
 		background-color: white;
 		opacity: 0.8;
-		padding: 10px 10px;
+		padding: 5px 10px;
+		margin: 0 auto;
+		text-align: center;
 		transition: width 1s;
 		-webkit-transition: width 2s;
 	}
+	#stats img {
+		margin-top: 5px;
+	}
+	#stats div {
+		margin-bottom: 5px;
+	}
+
 
 	#social {
 		position: absolute;
@@ -122,11 +138,16 @@ color: white;
    <div id="map" style=""></div>
    <div id="location"></div>
    <div id="logo"><a href="https://cquest.hackpad.com/OpenSolarMap-9oMiYswLksF" target="_blank" title="OpenSolarMap : le projet"><img src="img/opensolarmap.png" width=25%></a></div>
+
    <div id="plusone">+1 !</div>
+
    <div id="stats">
-     <img src="img//user.png" alt="Vos informations collectées" title="Vos contributions"><div id="count_ip">----</div>
-     <img src="img/building.png" alt="Bâtiments identifiés" title="Bâtiments identifiés"><div id="count_buildings">----</div>
-     <img src="img/users.png"  alt="Total des informations collectées" title="Total des contributions"><div id="count_total">----</div>
+     <img src="img/user.png" alt="Vos informations collectées" title="Vos contributions">
+     <div id="count_ip">----</div>
+     <img src="img/building.png" alt="Bâtiments identifiés" title="Bâtiments identifiés">
+     <div id="count_buildings">----</div>
+     <img src="img/users.png"  alt="Total des informations collectées" title="Total des contributions">
+     <div id="count_total">----</div>
    </div>
 
    <div id="social">
@@ -136,8 +157,12 @@ color: white;
      <a href="mailto:contact@opensolarmap.org" title="Nous envoyer un email"><img src="img/email.png"></a>&nbsp;
    </div>
 
+ 
    <div id="orient">
-     <div id="orient1">
+   
+    <div id="description">Décrivez la forme du toit dans le cercle jaune, à l'aide d'un des boutons suivants : </div>
+   
+    <div id="orient1">
      <svg style="float: left; display: inline-block" id="rooftype1" alt="Ligne de faîte orientée est-ouest" title="Ligne de faîte orientée est-ouest">
      <rect
        style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:4;stroke-linecap:round;stroke-opacity:1;stroke-dasharray:none"
