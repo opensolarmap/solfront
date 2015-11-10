@@ -90,12 +90,12 @@
 
 #plusone{
 position: absolute;
-left: 50%;
-top: 50%;
+left: 100px;
+top: 130px;
 z-index: 100;
-font-size: 100px;
+font-size: 40px;
 display: none;
-color: white;
+color: #0f0
 }
 
 	#stats {
@@ -206,16 +206,28 @@ color: white;
 
    <script>
 	var building;
+	var gJson, mark;
+	var map = L.map('map',{ zoomControl:false }).setView([30, 0], 3);
 
-	// get one building to classify...
-	queue()
-		.defer(d3.json, 'http://stmaur.cquest.org:12345/building')
-		.await(gotBuilding);
+	L.tileLayer('http://{s}.tiles.mapbox.com/v4/openstreetmap.map-inh7ifmo/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoib3BlbnN0cmVldG1hcCIsImEiOiJncjlmd0t3In0.DmZsIeOW-3x-C5eX-wAqTw', {
+		maxZoom: 19,
+		minZoom: 3,
+		attribution: 'Imagery &copy; <a href="https://www.mapbox.com/satellite/">Mapbox/DigitalGlobe</a> - Map data &copy; <a href="http://osm.org/copyright">OpenStreetMap contributors</a>'
+	}).addTo(map);
 
-	// get statistics
-	queue()
-		.defer(d3.json, 'http://stmaur.cquest.org:12345/stats')
-		.await(gotStats);
+	function getNext() {
+		// get one building to classify...
+		queue()
+			.defer(d3.json, 'http://stmaur.cquest.org:12345/building')
+			.await(gotBuilding);
+
+		// get statistics
+		queue()
+			.defer(d3.json, 'http://stmaur.cquest.org:12345/stats')
+			.await(gotStats);
+	}
+
+	getNext();
 
 	// display statistics when received
 	function gotStats(error, stats) {
@@ -232,15 +244,6 @@ color: white;
 
 	function gotBuilding(error, gjson) {
 
-		function matchKey(datapoint, key_variable){
-			if (typeof key_variable[0][datapoint] === 'undefined') {
-				return null;
-			}
-			else {
-				return parseFloat(key_variable[0][datapoint]);
-			};
-		};
-
 	building = gjson;
 
 	// reverse geocoding query to get location name
@@ -252,19 +255,21 @@ color: white;
 	zoom = 19;
 	if (building.properties.radius>50) { zoom=18; }
 
-	var map = L.map('map',{ zoomControl:false }).setView([building.properties.lat, building.properties.lon], zoom);
+	map.setView(new L.LatLng(building.properties.lat, building.properties.lon), zoom);
 
-	L.tileLayer('http://{s}.tiles.mapbox.com/v4/openstreetmap.map-inh7ifmo/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoib3BlbnN0cmVldG1hcCIsImEiOiJncjlmd0t3In0.DmZsIeOW-3x-C5eX-wAqTw', {
-		maxZoom: 19,
-		minZoom: 16,
-		attribution: 'Imagery &copy; <a href="https://www.mapbox.com/satellite/">Mapbox/DigitalGlobe</a> - Map data &copy; <a href="http://osm.org/copyright">OpenStreetMap contributors</a>'
-	}).addTo(map);
+	// remove last circle/building footprint
+	if (mark != undefined) {
+        map.removeLayer(mark);
+	}
+    if (gJson != undefined) {
+        map.removeLayer(gJson);
+	}
 
 	// show the building as a dashed footprint
-	var gJson = L.geoJson(building, {style: function (feature) { return {color: 'white', fillOpacity: 0, dashArray: '0.1,10'};},}).addTo(map);
+	gJson = L.geoJson(building, {style: function (feature) { return {color: 'white', opacity: 0.75, fillOpacity: 0, dashArray: '0.1,10'};},}).addTo(map);
 
 	// circle around with additionnal 5m margin
-	var mark = L.circle([building.properties.lat, building.properties.lon], building.properties.radius+5, {color: 'yellow', fillColor: 'yellow', fillOpacity: 0}).addTo(map);
+	mark = L.circle([building.properties.lat, building.properties.lon], building.properties.radius+5, {color: 'yellow', opacity: 0.75, fillColor: 'yellow', fillOpacity: 0}).addTo(map);
 
 	d3.selectAll('#orient svg')
 		.on('click', function(){pushbutton(this,'clickevt');});
@@ -279,32 +284,27 @@ color: white;
 			var rooftype_number = that;
 		}
 
-		d3.select('svg#rooftype' + rooftype_number)
-			.append('circle')
-			.attr('r',30)
-			.attr('cx', 50)
-			.attr('cy', 50)
-			.attr('fill', 'yellow')
-			.attr('opacity', 0.8);
-
 		// POST the user selection to the API
 		var xhr = new XMLHttpRequest();
 		xhr.open('POST', 'http://stmaur.cquest.org:12345/building');
 		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 		xhr.onreadystatechange = function() {
-		if(xhr.status == 200) {
-			d3.select('div#plusone')
-			    .style('display', 'block')
-			    .style('font-size', '40px')
-			    .transition()
-			    .duration(1000)
-			    .style('font-size', '100px')
-			    .style('opacity', '0')
-			    .transition()
-			    .delay(1500)
-			    .style('display', 'none');
-			location.reload();
-			}
+			if(xhr.status == 200) {
+				d3.select('div#plusone')
+				    .style('font-size', '40px')
+				    .style('display', 'block')
+				    .style('opacity', '1')
+				    .transition()
+				    .duration(1500)
+				    .style('font-size', '200px')
+				    .style('opacity', '0')
+				    .transition()
+				    .delay(2000)
+				    .style('display', 'none');
+
+				// get next building to classify and update statistics...
+				getNext();
+			};
 		};
 		xhr.send('type=' + rooftype_number + '&id=' + roof_id);
 	};
@@ -327,8 +327,8 @@ color: white;
 			else if (d3.event.keyCode == 48 || d3.event.keyCode == 96){ // '0' behaves like '4'
 				pushbutton(4,'keyevt');
 			};
-	});
-}
+		});
+	}
 </script>
 </body>
 </html>
