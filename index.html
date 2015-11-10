@@ -262,7 +262,7 @@ color: white;
 
 	var gJson = L.geoJson(building, {style: function (feature) { return {color: 'white', fillOpacity: 0, dashArray: '0.1,10'};},}).addTo(map);
 
-     	var mark = L.circle([building.properties.lat, building.properties.lon], building.properties.radius*1.2, {color: 'yellow', fillColor: 'yellow', fillOpacity: 0}).addTo(map);
+     	var mark = L.circle([building.properties.lat, building.properties.lon], building.properties.radius+5, {color: 'yellow', fillColor: 'yellow', fillOpacity: 0}).addTo(map);
 
 	d3.selectAll('#orient svg')
 		.on('click', function(){pushbutton(this,'clickevt');});
