@@ -185,7 +185,7 @@ color: white;
        d="m 100,0 0,100 -90,0 0,-100 z"
        />
      </svg>
-     <svg  style="float: left; display: inline-block"  id="rooftype4" alt="Forme de toit inconnue ou complexe" title="Forme de toit inconnue ou complexe (touche 4)">
+     <svg  style="float: left; display: inline-block"  id="rooftype4" alt="Forme de toit inconnue ou complexe" title="Forme de toit inconnue ou complexe (touche 4 ou 0)">
      <rect
        style="fill:#ffffff;fill-opacity:1;stroke-width:3px;stroke:#000000;stroke-opacity:1"
        id="rect2985"
@@ -259,8 +259,8 @@ color: white;
 
 		d3.select("#location").text(geocode.features[0].properties.label);
 
-d3.selectAll('#orient svg')
-.on('click', function(){pushbutton(this,'clickevt');console.log('clicked');});
+	d3.selectAll('#orient svg')
+		.on('click', function(){pushbutton(this,'clickevt');});
 
 
 	function pushbutton(that, evt) {
@@ -305,7 +305,6 @@ d3.select('svg#rooftype' + rooftype_number)
 
 d3.select("body")
     .on("keydown", function() {
-console.log(d3.event.keyCode);
 if (d3.event.keyCode == 49 || d3.event.keyCode == 97){
 pushbutton(1,'keyevt');
 }
@@ -316,6 +315,9 @@ else if (d3.event.keyCode == 51 || d3.event.keyCode == 99){
 pushbutton(3,'keyevt');
 }
 else if (d3.event.keyCode == 52 || d3.event.keyCode == 100){
+pushbutton(4,'keyevt');
+}
+else if (d3.event.keyCode == 48 || d3.event.keyCode == 96){
 pushbutton(4,'keyevt');
 }
 
