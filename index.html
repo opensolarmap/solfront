@@ -8,7 +8,6 @@
    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js" charset="utf-8"></script>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/queue-async/1.0.7/queue.min.js"></script>
 
-
    <style>
 
       html, body {
@@ -59,17 +58,16 @@
 	#orient  {
 		position: absolute;
 		z-index: 9;
-		top: 75%;
 		bottom: 0%;
-		padding: 20px;
 		opacity: 0.8;
 		background-color: white;
 		width: 100%;
-    padding-left: 25%;
 	}
 
 	#orient svg {
 		width: 150px;
+		margin-left: auto;
+		margin-right: auto;
 		opacity: 1.0;
     cursor:pointer;
     cursor:hand;
@@ -77,14 +75,10 @@
 	}
 
 	#orient1  {
-		float: left;
-		width: 308px;
-		height: 150px;
-	}
-
-	#orient2  {
-		float: left;
-		width: 308px;
+		margin-left: auto;
+		margin-right: auto;
+		margin-top: 20px;
+		width: 600px;
 		height: 150px;
 	}
 
@@ -169,22 +163,16 @@ color: #0f0
        style="fill:none;stroke:#000000;stroke-width:3px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
        d="M 50,90 50,0" />
      </svg>
-     </div>
-
-     <div id="orient2">
      <svg  style="float: left; display: inline-block" id="rooftype3" alt="Toit plat" title="Toit plat (touche 3)">
-     <rect
-       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:4;stroke-linecap:round;stroke-opacity:1;stroke-dasharray:none"
-       id="rect2993"
-       width="90"
-       height="21"
-       x="5"
-       y="-23.5"
-       transform="matrix(0,1,-1,0,0,0)" />
-     <path
-       style="fill:#ffffff;stroke:#000000;stroke-width:4px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
-       d="m 100,0 0,100 -90,0 0,-100 z"
-       />
+  <path
+     style="fill:none;stroke:#000000;stroke-width:3px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+     d="M 10,0 0,10 0,110 90,110 100,100 100,0 z" />
+  <path
+     style="fill:none;stroke:#000000;stroke-width:3px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+     d="m 10,0 0,100 90,0"/>
+  <path
+     style="fill:none;stroke:#000000;stroke-width:3px;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+     d="M 10,100 0,110"/>
      </svg>
      <svg  style="float: left; display: inline-block"  id="rooftype4" alt="Forme de toit inconnue ou complexe" title="Forme de toit inconnue ou complexe (touche 4 ou 0)">
      <rect
