@@ -287,6 +287,15 @@
 				    .delay(2000)
 				    .style('display', 'none');
 
+				d3.select('#rooftype'+rooftype_number)
+				    .style('opacity', '1')
+				    .transition()
+				    .duration(250)
+				    .style('opacity', '0.5')
+				    .transition()
+				    .duration(500)
+				    .delay(1000);
+
 				// get next building to classify and update statistics...
 				getNext(building.properties.lat, building.properties.lon);
 			};
