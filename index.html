@@ -298,11 +298,12 @@
 				d3.select('#rooftype'+rooftype_number)
 				    .style('opacity', '1')
 				    .transition()
-				    .duration(250)
+				    .duration(500)
 				    .style('opacity', '0.5')
 				    .transition()
 				    .duration(500)
-				    .delay(1000);
+				    .delay(1000)
+				    .style('opacity', '');
 
 				// go to next building to classify and update statistics...
 				// POST now sends back the next building to classify...
