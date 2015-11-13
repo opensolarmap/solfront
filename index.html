@@ -208,13 +208,17 @@
 			.defer(d3.json, api_get_building)
 			.await(gotBuilding);
 
-		// get statistics
+		getStats();
+	}
+
+	getNext();
+
+	// get statistics
+	function getStats() {
 		queue()
 			.defer(d3.json, 'http://stmaur.cquest.org:12345/stats')
 			.await(gotStats);
 	}
-
-	getNext();
 
 	// display statistics when received
 	function gotStats(error, stats) {
@@ -300,8 +304,10 @@
 				    .duration(500)
 				    .delay(1000);
 
-				// get next building to classify and update statistics...
-				getNext(building.properties.lat, building.properties.lon);
+				// go to next building to classify and update statistics...
+				// POST now sends back the next building to classify...
+				gotBuilding(0,JSON.parse(xhr.responseText));
+				getStats(); // update statistics
 			};
 		};
 		xhr.send('type=' + rooftype_number + '&id=' + roof_id);
