@@ -222,7 +222,8 @@
 	// display reverse geocoding result when received
 	function gotAddr(error, geocode) {
 		d3.select("#location")
-			.text(geocode.features[0].properties.label);
+			.text(!error && geocode.features && geocode.features.length ?
+				geocode.features[0].properties.label : "");
 	}
 
 	function gotBuilding(error, gjson) {
