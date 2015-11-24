@@ -307,8 +307,7 @@
 				    .duration(1500)
 				    .style('font-size', '200px')
 				    .style('opacity', '0')
-				    .transition()
-				    .delay(2000)
+				    .transition().duration(0)
 				    .style('display', 'none');
 
 				d3.select('#rooftype'+rooftype_number)
