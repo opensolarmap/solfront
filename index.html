@@ -290,6 +290,9 @@
 			var rooftype_number = that;
 		}
 
+		d3.select('#rooftype'+rooftype_number)
+			.style('opacity', '1')
+
 		// POST the user selection to the API
 		var xhr = new XMLHttpRequest();
 		xhr.open('POST', 'http://stmaur.cquest.org:12345/building?lat='+building.properties.lat+'&lon='+building.properties.lon);
@@ -309,14 +312,9 @@
 				    .style('display', 'none');
 
 				d3.select('#rooftype'+rooftype_number)
-				    .style('opacity', '1')
 				    .transition()
 				    .duration(500)
-				    .style('opacity', '0.5')
-				    .transition()
-				    .duration(500)
-				    .delay(1000)
-				    .style('opacity', '');
+				    .style('opacity', '0.5');
 
 				// go to next building to classify and update statistics...
 				// POST now sends back the next building to classify...
