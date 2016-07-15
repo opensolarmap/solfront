@@ -295,8 +295,7 @@
 
 		// POST the user selection to the API
 		var xhr = new XMLHttpRequest();
-		xhr.open('POST', 'http://stmaur.cquest.org:12345/building?lat='+building.properties.lat+'&lon='+building.properties.lon);
-		xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+		xhr.open('POST', 'http://stmaur.cquest.org:12345/building?lat='+building.properties.lat+'&lon='+building.properties.lon+'&id='+building.properties.id+'&type='+rooftype_number);
 		xhr.onreadystatechange = function() {
 			if(xhr.readyState == 4 && xhr.status == 200) {
 				d3.select('div#plusone')
