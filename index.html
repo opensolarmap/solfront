@@ -254,7 +254,9 @@
 			.text(!error && geocode.features && geocode.features.length
         ?	(geocode.features[0].properties.street != undefined
           ? geocode.features[0].properties.street
-          : geocode.features[0].properties.locality)
+          : ( geocode.features[0].properties.locality != undefined
+            ? geocode.features[0].properties.locality
+            : "" )
           + " " + geocode.features[0].properties.postcode
           + " " + geocode.features[0].properties.city
         : "");
