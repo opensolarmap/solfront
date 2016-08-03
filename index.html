@@ -201,7 +201,8 @@
    </div>
 
    <script>
-	var building;
+	var buildings, building;
+  var stats_total=0, stats_user=0;
 	var gJson, mark;
 	var map = L.map('map',{ zoomControl:false }).setView([30, 0], 3);
 	var hash = new L.Hash(map);
@@ -220,19 +221,34 @@
     attribution: 'Imagery &copy; BDOrtho IGN - Map data &copy; <a href="http://osm.org/copyright">OpenStreetMap contributors</a>'
   }).addTo(map);
 
-	function getNext(lat, lon) {
-		// get one building to classify...
-		api_get_building = api+'building';
-		if (lat != undefined && lon != undefined)
-			api_get_building = api_get_building + '?lat='+lat+'&lon='+lon
-		queue()
-			.defer(d3.json, api_get_building)
-			.await(gotBuilding);
 
-		getStats();
+	function getNext(lat, lon) {
+    if (buildings != undefined && buildings.length>1) {
+      // get next building in the array
+      buildings.splice(0,1);
+      showBuilding(buildings[0]);
+      // update statistics locally
+      stats_total++;
+      stats_user++;
+      d3.select("#count_ip").text(stats_user);
+      d3.select("#count_total").text(stats_total);
+    }
+
+    // get first buildings or more...
+    if (buildings==undefined || buildings.length<5) {
+      getStats(); // update statistics
+
+		  // get buildings to classify...
+		  api_get_building = api+'building?limit=20';
+		  if (lat != undefined && lon != undefined)
+			  api_get_building = api_get_building + '&lat='+lat+'&lon='+lon
+		  queue()
+			  .defer(d3.json, api_get_building)
+			  .await(gotBuilding);
+    }
 	}
 
-	getNext();
+	getNext(); // get first batch of buildings
 
 	// get statistics
 	function getStats() {
@@ -246,6 +262,8 @@
 		d3.select("#count_total").text(stats.count_total);
 		d3.select("#count_ip").text(stats.count_ip);
 		d3.select("#count_buildings").text(stats.count_buildings);
+    stats_user = stats.count_ip;
+    stats_total = stats.count_total;
 	}
 
 	// display reverse geocoding result when received
@@ -263,38 +281,57 @@
         : "");
 	}
 
-	function gotBuilding(error, gjson) {
+  // function to deduplicate any array
+  Array.prototype.unique = function() {
+      var a = this.concat();
+      for(var i=0; i<a.length; ++i) {
+          for(var j=i+1; j<a.length; ++j) {
+              if(a[i] === a[j])
+                  a.splice(j--, 1);
+          }
+      }
 
-	building = gjson;
+      return a;
+  };
 
-	// reverse geocoding query to get location name
-	queue()
-		.defer(d3.json, 'http://api-adresse.data.gouv.fr/reverse/?lon='+gjson.properties.lon+'&lat='+gjson.properties.lat+'&type=street')
-		.await(gotAddr);
+  function gotBuilding(error, gjson) {
+    if (buildings != undefined) {
+      // on complete la liste en dédupliquant
+      buildings = buildings.concat(gjson.features).unique();
+    }
+    else {
+      // premier chargement de liste, on affiche le premier batiment
+      buildings = gjson.features;
+      showBuilding(buildings[0]);
+    }
+  }
 
-	// adjust zoom on building size
-	zoom = 19;
-	if (building.properties.radius>50) { zoom=18; }
+  function showBuilding(gjson) {
+    building = gjson;
+    // reverse geocoding query to get location name
+    queue()
+      .defer(d3.json, 'http://api-adresse.data.gouv.fr/reverse/?lon='+building.properties.lon+'&lat='+building.properties.lat)
+      .await(gotAddr);
 
-	map.setView(new L.LatLng(building.properties.lat, building.properties.lon), zoom);
+    // adjust zoom on building size
+	  zoom = 19;
+	  if (building.properties.radius>50) { zoom=18; }
+
+	  map.setView(new L.LatLng(building.properties.lat, building.properties.lon), zoom);
 
 
-	// remove last circle/building footprint
-	if (mark != undefined) {
-        map.removeLayer(mark);
-	}
-    if (gJson != undefined) {
-        map.removeLayer(gJson);
-	}
+  	// remove last circle/building footprint
+	  if (mark != undefined) { map.removeLayer(mark); }
+    if (gJson != undefined) { map.removeLayer(gJson);	}
 
-	// show the building as a dashed footprint
-	gJson = L.geoJson(building, {style: function (feature) { return {color: 'white', opacity: 0.75, fillOpacity: 0, dashArray: '0.1,10'};},}).addTo(map);
+    // show the building as a dashed footprint
+    gJson = L.geoJson(building, {style: function (feature) { return {color: 'white', opacity: 0.75, fillOpacity: 0, dashArray: '0.1,10'};},}).addTo(map);
 
-	// circle around with additionnal 5m margin
-	mark = L.circle([building.properties.lat, building.properties.lon], building.properties.radius+10, {color: 'yellow', opacity: 0.75, fillColor: 'yellow', fillOpacity: 0}).addTo(map);
+    // circle around with additionnal 5m margin
+    mark = L.circle([building.properties.lat, building.properties.lon], building.properties.radius+10, {color: 'yellow', opacity: 0.75, fillColor: 'yellow', fillOpacity: 0}).addTo(map);
 
-	d3.selectAll('#orient svg')
-		.on('click', function(){pushbutton(this,'clickevt');});
+    d3.selectAll('#orient svg')
+		    .on('click', function(){pushbutton(this,'clickevt');});
 
 	function pushbutton(that, evt) {
 		var roof_id = building.properties.id;
@@ -311,32 +348,30 @@
 
 		// POST the user selection to the API
 		var xhr = new XMLHttpRequest();
-		xhr.open('POST', api+'building?lat='+building.properties.lat+'&lon='+building.properties.lon+'&id='+building.properties.id+'&type='+rooftype_number);
-		xhr.onreadystatechange = function() {
+		xhr.open('POST', api+'building?next=false&id='+building.properties.id+'&lat'+building.properties.lat+'&lon='+building.properties.lon+'&type='+rooftype_number);
+    xhr.onreadystatechange = function() {
 			if(xhr.readyState == 4 && xhr.status == 200) {
-				d3.select('div#plusone')
-				    .style('font-size', '40px')
-				    .style('display', 'block')
-				    .style('opacity', '1')
-				    .transition()
-				    .duration(1500)
-				    .style('font-size', '200px')
-				    .style('opacity', '0')
-				    .transition().duration(0)
-				    .style('display', 'none');
-
-				d3.select('#rooftype'+rooftype_number)
-				    .transition()
-				    .duration(500)
-				    .style('opacity', '0.5');
-
-				// go to next building to classify and update statistics...
-				// POST now sends back the next building to classify...
-				gotBuilding(0,JSON.parse(xhr.responseText));
-				getStats(); // update statistics
 			};
 		};
 		xhr.send('type=' + rooftype_number + '&id=' + roof_id);
+    getNext(building.properties.lat, building.properties.lon);
+
+    // button back to normal grey
+    d3.select('#rooftype'+rooftype_number)
+        .transition()
+        .duration(1000)
+        .style('opacity', '0.5');
+    // +1 animation
+    d3.select('div#plusone')
+		    .style('font-size', '40px')
+		    .style('display', 'block')
+		    .style('opacity', '1')
+		    .transition()
+		    .duration(1500)
+		    .style('font-size', '200px')
+		    .style('opacity', '0')
+		    .transition().duration(0)
+	      .style('display', 'none');
 	};
 
 	// set keyboard events (1,2,3,4+0) corresponding on rooftype
