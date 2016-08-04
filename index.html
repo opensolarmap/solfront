@@ -224,9 +224,23 @@
 
 	function getNext(lat, lon) {
     if (buildings != undefined && buildings.length>1) {
-      // get next building in the array
-      buildings.splice(0,1);
-      showBuilding(buildings[0]);
+      // get next closest building in the array
+      best_distance = 1000000;
+      best_building = 0;
+      for (b = buildings.length-1; b > 0; b--) {
+        db = (lon-buildings[b].properties.lon)*(lon-buildings[b].properties.lon) + (lat-buildings[b].properties.lat)*(lat-buildings[b].properties.lat);
+        if (db==0) {
+          buildings.splice(b,1);
+        }
+        else if (db<best_distance) {
+          best_distance = db;
+          best_building = b;
+        }
+      }
+      building = buildings[best_building];
+      buildings.splice(best_building,1);
+      showBuilding(building);
+
       // update statistics locally
       stats_total++;
       stats_user++;
@@ -302,7 +316,9 @@
     else {
       // premier chargement de liste, on affiche le premier batiment
       buildings = gjson.features;
-      showBuilding(buildings[0]);
+      building = buildings[0];
+      buildings.splice(0,1);
+      showBuilding(building);
     }
   }
 
