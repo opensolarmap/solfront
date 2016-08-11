@@ -207,7 +207,7 @@
 	var map = L.map('map',{ zoomControl:false }).setView([30, 0], 3);
 	var hash = new L.Hash(map);
         var api = 'http://api.opensolarmap.org/';
-  if (window.location.hostname != 'zopensolarmap.org') {
+  if (window.location.hostname != 'opensolarmap.org') {
     L.tileLayer('http://{s}.tiles.mapbox.com/v4/openstreetmap.map-inh7ifmo/{z}/{x}/{y}.png?access_token=pk.eyJ1Ijoib3BlbnN0cmVldG1hcCIsImEiOiJncjlmd0t3In0.DmZsIeOW-3x-C5eX-wAqTw', {
   		maxZoom: 19,
   		minZoom: 3,
@@ -296,6 +296,22 @@
         : "");
 	}
 
+  // display reverse geocoding result when received
+  function gotAddrNominatim(error, geocode) {
+		d3.select("#location")
+			.text(!error && geocode.address
+        ?	(geocode.address.road != undefined
+          ? geocode.address.road
+          : ( geocode.address.locality != undefined
+            ? geocode.address.locality
+            : "" )
+          )
+          + " " + geocode.address.postcode
+          + " " + (geocode.address.village != undefined ? geocode.address.village : "")
+          + " " + (geocode.address.state != undefined ? geocode.address.state : "")
+        : "");
+	}
+
   // function to deduplicate any array
   Array.prototype.unique = function() {
       var a = this.concat();
@@ -366,10 +382,16 @@
 
 function showBuilding() {
     // reverse geocoding query to get location name
-    queue()
-      .defer(d3.json, 'http://api-adresse.data.gouv.fr/reverse/?lon='+building.properties.lon+'&lat='+building.properties.lat)
-      .await(gotAddr);
-
+    if (true) {
+      queue()
+        .defer(d3.json, 'http://api-adresse.data.gouv.fr/reverse/?lon='+building.properties.lon+'&lat='+building.properties.lat)
+        .await(gotAddr);
+    }
+    else {
+      queue()
+        .defer(d3.json, 'http://nominatim.openstreetmap.org/reverse.php?format=json&lon='+building.properties.lon+'&lat='+building.properties.lat)
+        .await(gotAddrNominatim);
+    }
     // remove last circle/building footprint
   	if (mark != undefined) { map.removeLayer(mark); }
     if (gJson != undefined) { map.removeLayer(gJson);	}
